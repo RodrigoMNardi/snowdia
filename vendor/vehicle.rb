@@ -43,7 +43,9 @@ class Vehicle
     @speed     = speed                            #
     @direction = 0
     @type      = type
-    @position  = {lat: 0, lng: 0}
+    lat        = 33.129099 + rand(100) / 1000
+    lng        = 33.129099 + rand(100) / 1000
+    @position  = {lat: lat, lng: lng}
   end
 
   def walk
@@ -56,7 +58,6 @@ class Vehicle
 
   def change_direction
     return if rand(10)%2 == 0
-    puts 'Changing direction'
     @direction = rand(359)
   end
 
@@ -98,7 +99,9 @@ class Vehicle
   end
 
   def send_position
-    msg = {position: @position, id: @id.to_s, direction: @direction, type: @type}
+    msg = {position: @position, id: @id.to_s,
+           direction: @direction, type: @type,
+           date: Time.now.strftime('%m/%d/%Y %I:%M%p')}
     puts msg.inspect
     RestClient.post '127.0.0.1:9292/save_position', msg, {content_type: :json, accept: :json}
   end
