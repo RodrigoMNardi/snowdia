@@ -36,11 +36,11 @@ class HaversineFormula
   RAD_TO_DEG  = Math::PI / 180
 
   def initialize(latlong_a, latlong_b)
-    @latitude_a  = latlong_a[:latitude]
-    @longitude_a = latlong_a[:longitude]
+    @latitude_a  = latlong_a[:latitude]  || latlong_a[:lat]
+    @longitude_a = latlong_a[:longitude] || latlong_a[:lng]
 
-    @latitude_b  = latlong_b[:latitude]
-    @longitude_b = latlong_b[:longitude]
+    @latitude_b  = latlong_b[:latitude]  || latlong_b[:lat]
+    @longitude_b = latlong_b[:longitude] || latlong_b[:lng]
   end
 
   #
