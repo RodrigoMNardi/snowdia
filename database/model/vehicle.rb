@@ -27,6 +27,6 @@
 #  either expressed or implied, of the FreeBSD Project.
 #
 
-class Vehicle
+class Vehicle < ActiveRecord::Base
   has_many :positions
 end

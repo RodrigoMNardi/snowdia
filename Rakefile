@@ -2,12 +2,15 @@ require 'active_record'
 require 'sqlite3'
 
 namespace :db do
-  db_config       = {adapter:  'sqlite3',
-                     database: 'database/snowdia.db'}
+  db_config       = {'adapter'  =>  'sqlite3',
+                     'database' => 'database/snowdia.db'}
+  options         =  {:charset => 'utf8', :collation => 'utf8_unicode_ci'}
   desc 'Create the database'
   task :create do
-    puts "==> DB: #{db_config[:database]}"
-    ActiveRecord::Base.establish_connection.create_database(db_config[:database])
+    puts "==> DB: #{db_config['database']}"
+    ActiveRecord::Base.establish_connection db_config#.merge('database' => nil)
+    ActiveRecord::Base.connection
+    ActiveRecord::Base.establish_connection db_config
     puts 'Database created.'
   end
 

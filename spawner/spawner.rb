@@ -27,18 +27,20 @@
 #  either expressed or implied, of the FreeBSD Project.
 #
 
-require 'active_record'
-require 'sqlite3'
+1.upto 1000 do |i|
+  puts i
+  case rand(4)
+    when 1
+      vehicle = 'taxi'
+    when 2
+      vehicle = 'bus'
+    when 3
+      vehicle = 'train'
+    else
+      vehicle = 'tram'
+  end
 
-require "#{File.dirname(__FILE__)}/model/position"
-require "#{File.dirname(__FILE__)}/model/vehicle"
-
-# Change the following to reflect your database settings
-ActiveRecord::Base.establish_connection(
-    adapter:  'sqlite3',
-    host:     'localhost',
-    pool:     1000,
-    database: "#{File.dirname(__FILE__)}/snowdia.db"
-)
-
-ActiveRecord::Base.connection.close
+  puts "ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle}"
+  pid = spawn("ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle}")
+  Process.detach pid
+end

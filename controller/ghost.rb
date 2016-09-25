@@ -28,6 +28,7 @@
 #
 
 require 'sinatra/base'
+require "#{File.dirname(__FILE__)}/../database/database"
 require "#{File.dirname(__FILE__)}/../vendor/harvesine"
 
 DOWNTOWN = {lat: 33.129099, lng: -96.768673}
@@ -38,7 +39,22 @@ class Ghost < Sinatra::Base
     if HaversineFormula.new(DOWNTOWN, pos).distance > 50
       puts 'Leave city'
     else
-      puts "==> #{params.inspect}"
+      vehicle = Vehicle.where(vehicle_id: params['id']).first
+      if vehicle.nil? # Create a new entry
+        vehicle = Vehicle.new(vehicle_id: params['id'], vehicle_type: params['type'])
+      end
+
+      Thread.new do
+        position = Position.new(direction: params['direction'].to_i,
+                                latitude: params[:position][:lat].to_f,
+                                longitude: params[:position][:lng].to_f)
+        position.save!
+
+        vehicle.positions << position
+        vehicle.save!
+      end
     end
+
+    ActiveRecord::Base.connection.close
   end
 end

@@ -27,18 +27,10 @@
 #  either expressed or implied, of the FreeBSD Project.
 #
 
-require 'active_record'
-require 'sqlite3'
+require "#{File.dirname(__FILE__)}/../vendor/vehicle"
 
-require "#{File.dirname(__FILE__)}/model/position"
-require "#{File.dirname(__FILE__)}/model/vehicle"
-
-# Change the following to reflect your database settings
-ActiveRecord::Base.establish_connection(
-    adapter:  'sqlite3',
-    host:     'localhost',
-    pool:     1000,
-    database: "#{File.dirname(__FILE__)}/snowdia.db"
-)
-
-ActiveRecord::Base.connection.close
+vehicle = Vehicle.new(ARGV[0], rand(10)/1000.0)
+while true
+  vehicle.walk
+  sleep(20)
+end
