@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'uuidtools'
-gem 'sinatra'
+gem 'activerecord'
+gem 'rake'
 gem 'rest-client'
+gem 'sinatra'
+gem 'sqlite3'
+gem 'uuidtools'
