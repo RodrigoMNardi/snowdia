@@ -37,12 +37,14 @@ class Vehicle
   #
   # Direction - 0 North, 90 West, 180 South, 270 East
   #
-  def initialize(type, speed)
+  def initialize(type, speed, server)
     raise "Invalid speed set. (#{speed})" if !(speed.is_a? Integer or speed.is_a? Float) and speed <= 0
     @id        = UUIDTools::UUID.random_create    # Unique IDENTIFY
     @speed     = speed                            #
     @direction = 0
     @type      = type
+
+    @server    = server
 
     lat, lng = random_spawn
     @position  = {lat: lat, lng: lng}
@@ -122,6 +124,6 @@ class Vehicle
            direction: @direction, type: @type,
            date: Time.now.strftime('%m/%d/%Y %I:%M%p')}
     puts msg.inspect
-    RestClient.post 'http://0.0.0.0:9292/save_position', msg, {content_type: :json, accept: :json}
+    RestClient.post "http://#{@server}/save_position", msg, {content_type: :json, accept: :json}
   end
 end

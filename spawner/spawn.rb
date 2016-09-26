@@ -29,7 +29,8 @@
 
 require "#{File.dirname(__FILE__)}/../vendor/vehicle"
 
-vehicle = Vehicle.new(ARGV[0], rand(10)/10000.0)
+server = (ARGV[1].nil? or ARGV[1].empty?)? '0.0.0.0:9292' : ARGV[1]
+vehicle = Vehicle.new(ARGV[0], rand(10)/10000.0, server)
 while true
   sleep(20)
   vehicle.walk

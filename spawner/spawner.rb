@@ -27,7 +27,8 @@
 #  either expressed or implied, of the FreeBSD Project.
 #
 
-total = (ARGV[0].nil? or ARGV[0].empty?)? 10 : ARGV[0]
+total  = (ARGV[0].nil? or ARGV[0].empty?)? 10 : ARGV[0].to_i
+server = (ARGV[1].nil? or ARGV[1].empty?)? 10 : ARGV[1]
 
 1.upto total do |i|
   puts i
@@ -42,7 +43,7 @@ total = (ARGV[0].nil? or ARGV[0].empty?)? 10 : ARGV[0]
       vehicle = 'tram'
   end
 
-  puts "ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle}"
-  pid = spawn("ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle}")
+  puts "ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle} #{server}"
+  pid = spawn("ruby #{File.dirname(__FILE__)}/spawn.rb #{vehicle} #{server}")
   Process.detach pid
 end
