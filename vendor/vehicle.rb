@@ -120,10 +120,9 @@ class Vehicle
   end
 
   def send_position
-    msg = {position: @position, id: @id.to_s,
-           direction: @direction, type: @type,
-           date: Time.now.strftime('%m/%d/%Y %I:%M%p')}
-    puts msg.inspect
-    RestClient.post "http://#{@server}/save_position", msg, {content_type: :json, accept: :json}
+    RestClient.post "#{@server}/save_position", {position: @position, id: @id.to_s,
+                                                        direction: @direction, type: @type,
+                                                        date: Time.now.strftime('%m/%d/%Y %I:%M%p')},
+                    {content_type: :json, accept: :json}
   end
 end
