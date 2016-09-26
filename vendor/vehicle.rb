@@ -103,6 +103,6 @@ class Vehicle
            direction: @direction, type: @type,
            date: Time.now.strftime('%m/%d/%Y %I:%M%p')}
     puts msg.inspect
-    RestClient.post '127.0.0.1:9293/save_position', msg, {content_type: :json, accept: :json}
+    RestClient.post 'http://euqueroreciclar.eco.br:9090/save_position', msg, {content_type: :json, accept: :json}
   end
 end

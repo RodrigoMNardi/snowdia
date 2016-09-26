@@ -28,12 +28,15 @@
 #
 
 require 'sinatra/base'
+require 'coffee-script'
 require "#{File.dirname(__FILE__)}/../database/database"
 require "#{File.dirname(__FILE__)}/../vendor/harvesine"
 
-DOWNTOWN = {lat: 33.129099, lng: -96.768673}
+DOWNTOWN = {lat: 32.736599, lng: -97.076419}
 
 class Ghost < Sinatra::Base
+  set :views, Proc.new { File.join(root, '../views') }
+
   post '/save_position' do
     pos = {lat: params[:position][:lat].to_f, lng: params[:position][:lng].to_f}
     if HaversineFormula.new(DOWNTOWN, pos).distance > 50
@@ -56,5 +59,20 @@ class Ghost < Sinatra::Base
     end
 
     ActiveRecord::Base.connection.close
+
+  end
+
+  get '/' do
+    erb :map, locals: {downtown: DOWNTOWN, vehicles: Vehicle.all}
+  end
+
+  get '/update' do
+    vehicles = []
+    Vehicle.all.each do |vehicle|
+      vehicles << vehicle.display
+    end
+
+    content_type :json
+    vehicles.to_json
   end
 end

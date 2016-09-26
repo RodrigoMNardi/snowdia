@@ -29,4 +29,10 @@
 
 class Vehicle < ActiveRecord::Base
   has_many :positions
+
+  def display
+    position = self.positions.last
+    {id: self.vehicle_id, type: self.vehicle_type,
+     direction: position.direction, lat: position.latitude, lng: position.longitude}
+  end
 end
