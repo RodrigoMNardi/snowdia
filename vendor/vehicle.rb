@@ -43,8 +43,8 @@ class Vehicle
     @speed     = speed                            #
     @direction = 0
     @type      = type
-    lat        = 32.73202  + (@speed.to_f * 2)
-    lng        = -97.10700 + @speed
+
+    lat, lng = random_spawn
     @position  = {lat: lat, lng: lng}
 
     send_position
@@ -57,6 +57,23 @@ class Vehicle
   end
 
   private
+
+  def random_spawn
+    case rand(5)
+      when 0
+        return [32.75841, -97.07614]
+      when 1
+        return [32.75408, -97.11382]
+      when 2
+        return [32.73523, -97.09760]
+      when 3
+        return [32.73256, -97.07159]
+      when 4
+        return [32.73155, -97.10755]
+      else
+        return [32.75971, -97.05606]
+    end
+  end
 
   def change_direction
     return if rand(10)%2 == 0
