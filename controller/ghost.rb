@@ -28,7 +28,6 @@
 #
 
 require 'sinatra/base'
-require 'coffee-script'
 require "#{File.dirname(__FILE__)}/../database/database"
 require "#{File.dirname(__FILE__)}/../vendor/harvesine"
 
