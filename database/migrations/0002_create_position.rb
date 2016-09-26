@@ -31,8 +31,8 @@ class CreatePosition < ActiveRecord::Migration
   def change
     create_table :positions do |t|
       t.integer :direction
-      t.integer :latitude
-      t.integer :longitude
+      t.float   :latitude
+      t.float   :longitude
 
       t.timestamps
     end
