@@ -32,14 +32,16 @@ require 'coffee-script'
 require "#{File.dirname(__FILE__)}/../database/database"
 require "#{File.dirname(__FILE__)}/../vendor/harvesine"
 
-DOWNTOWN = {lat: 32.736599, lng: -97.076419}
+DOWNTOWN = {lat: 32.7472844, lng: -97.0987854}
 
 class Ghost < Sinatra::Base
   set :views, Proc.new { File.join(root, '../views') }
+  set :public_folder, "#{File.dirname(__FILE__)}/../public"
 
   post '/save_position' do
     pos = {lat: params[:position][:lat].to_f, lng: params[:position][:lng].to_f}
-    if HaversineFormula.new(DOWNTOWN, pos).distance > 50
+
+    if HaversineFormula.new(DOWNTOWN, pos).distance >= 50
       puts 'Leave city'
     else
       vehicle = Vehicle.where(vehicle_id: params['id']).first

@@ -21,37 +21,52 @@
 <script>
     marks = {}
     $(document).ready(function(){
+        add_marks();
         setInterval(function(){
-
-        }, 20000);
-
-        $.get( "/update", function( data ) {
-            alert(data);
-            $.each(data, function( i, l ){
-                alert(i);
-                var marker = new google.maps.Marker({
-                    position: {lat: l['lat'], lng: l['lng']},
-                    map: map,
-                    title:  l['id'] + ' Driving: ' + l['direction']
-                });
+            $.get( "/update", function( data ) {
+                add_marks();
             });
-        });
+        }, 25000);
     });
 
+    function remove_markers() {
+        $.each(marks, function( i, l ){
+            l.setMap(null);
+        });
+    }
 
+    function add_marks() {
+        remove_markers();
+        $.get( "/update", function( data ) {
+            $.each(data, function( i, l ){
+                var marker;
+                marker = new google.maps.Marker({
+                    position: {lat: l['lat'], lng: l['lng']},
+                    map: map,
+                    icon: '/'+l['type']+'.png',
+                    title:  l['id'] + ' Driving: ' + l['direction']
+                });
+
+                marks[l['id']] = marker
+            });
+        });
+    }
 
     var map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: <%= downtown[:lat]%>, lng: <%= downtown[:lng]%>},
-            zoom: 15
+            zoom: 12
         });
 
         var marker = new google.maps.Marker({
             position: {lat: <%= downtown[:lat]%>, lng: <%= downtown[:lng]%>},
             map: map,
+            icon: '/downtown.png',
             title: 'Snowdia Downtown'
         });
+
+        add_marks();
     }
 
 </script>

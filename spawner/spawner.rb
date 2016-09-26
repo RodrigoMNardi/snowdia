@@ -27,7 +27,9 @@
 #  either expressed or implied, of the FreeBSD Project.
 #
 
-1.upto 1000 do |i|
+total = (ARGV[0].nil? or ARGV[0].empty?)? 10 : ARGV[0]
+
+1.upto total do |i|
   puts i
   case rand(4)
     when 1

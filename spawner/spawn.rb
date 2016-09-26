@@ -29,8 +29,8 @@
 
 require "#{File.dirname(__FILE__)}/../vendor/vehicle"
 
-vehicle = Vehicle.new(ARGV[0], rand(10)/1000.0)
+vehicle = Vehicle.new(ARGV[0], rand(10)/10000.0)
 while true
-  vehicle.walk
   sleep(20)
+  vehicle.walk
 end

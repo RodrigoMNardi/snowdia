@@ -43,9 +43,11 @@ class Vehicle
     @speed     = speed                            #
     @direction = 0
     @type      = type
-    lat        = 33.129099 + rand(25)  / 1000
-    lng        = -96.768673 + rand(25) / 1000
+    lat        = 32.73202  + (@speed.to_f * 2)
+    lng        = -97.10700 + @speed
     @position  = {lat: lat, lng: lng}
+
+    send_position
   end
 
   def walk
@@ -103,6 +105,6 @@ class Vehicle
            direction: @direction, type: @type,
            date: Time.now.strftime('%m/%d/%Y %I:%M%p')}
     puts msg.inspect
-    RestClient.post 'http://euqueroreciclar.eco.br:9090/save_position', msg, {content_type: :json, accept: :json}
+    RestClient.post 'http://0.0.0.0:9292/save_position', msg, {content_type: :json, accept: :json}
   end
 end
