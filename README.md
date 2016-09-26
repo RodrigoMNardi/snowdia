@@ -24,6 +24,9 @@ cd spawner/
 
 ruby spawner.rb <number of entities> <server>
 
+=== Acceptable Message ===
+<server>/save_position?position[lat]=<value>&position[lng]=<value>&id=<value>&type=<value>&direction=<value>&date=<value>
+
 === Troubleshoot ===
 
 If your server does not response a vehicle request, it will return a timeout error, server and vehicle class will log
